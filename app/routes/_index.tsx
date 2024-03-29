@@ -2,8 +2,8 @@ import type {MetaFunction} from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
   return [
-    {title: "New Remix App"},
-    {name: "description", content: "Welcome to Remix!"},
+    {title: "back4app-containers-remix"},
+    {name: "description", content: "Learn how to deploy a Remix project to Back4app Containers."},
   ];
 };
 
@@ -26,6 +26,7 @@ export default function Index() {
             target="_blank"
             href="https://remix.run/tutorials/jokes"
             rel="noreferrer"
+            className="text-red-500 text-2xl"
           >
             Deep Dive Jokes App Tutorial
           </a>
