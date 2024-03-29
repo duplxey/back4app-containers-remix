@@ -1,14 +1,33 @@
-const note = {
-  "title": "Microservices Architecture",
-  "emoji": "🧱",
-  "content": "Break down complex applications into smaller, independent services to enhance modularity and facilitate continuous delivery.",
-  "createdAt": "2024-03-29T19:25:10.105Z",
-  "updatedAt": "2024-03-29T19:25:10.105Z",
-  "objectId": "0CMWkNzTLY",
-  "className": "Note"
+import {json, LoaderFunctionArgs} from "@remix-run/node";
+import {invariant} from "@remix-run/router/history";
+import {useLoaderData} from "@remix-run/react";
+import Parse from "parse/node";
+
+export const loader = async ({params}: LoaderFunctionArgs) => {
+  invariant(params.noteId, "Missing noteId param");
+  const Note = Parse.Object.extend("Note");
+  const query = new Parse.Query(Note);
+  try {
+    const result = await query.get(params.noteId || "");
+    if (!result) {
+      throw new Response("Not Found", {status: 404});
+    }
+    const note = {
+      objectId: result.id,
+      title: result.get("title"),
+      content: result.get("content"),
+      emoji: result.get("emoji"),
+      createdAt: result.get("createdAt"),
+      updatedAt: result.get("updatedAt"),
+    };
+    return json({note});
+  } catch (e) {
+    throw new Response("Not Found", {status: 404});
+  }
 };
 
 export default function NoteDetails() {
+  const {note} = useLoaderData<typeof loader>();
   return (
     <div>
       <div className="text-6xl mb-4">
