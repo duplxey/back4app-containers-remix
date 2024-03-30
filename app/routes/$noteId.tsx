@@ -1,6 +1,6 @@
 import {getNote} from "~/api/backend";
 import {json, LoaderFunctionArgs} from "@remix-run/node";
-import {Form, Link, useLoaderData} from "@remix-run/react";
+import {Form, useLoaderData} from "@remix-run/react";
 import {invariant} from "@remix-run/router/history";
 
 export const loader = async ({params}: LoaderFunctionArgs) => {
@@ -22,18 +22,15 @@ export default function NoteDetails() {
         <p>{note.content}</p>
       </div>
       <div className="space-x-2">
-        <Link to={`/${note.objectId}/edit`} className="bg-blue-500 hover:bg-blue-600 font-semibold text-white
-          p-2 border-2 border-blue-600 rounded-md"
-        >
-          Edit
-        </Link>
         <Form
           method="post" action="destroy"
           onSubmit={(event) => event.preventDefault()}
           className="inline-block"
         >
-          <button type="submit" className="bg-red-500 hover:bg-red-600 font-semibold text-white
-           p-2 border-2 border-red-600 rounded-md"
+          <button
+            type="submit"
+            className="bg-red-500 hover:bg-red-600 font-semibold text-white
+              p-2 border-2 border-red-600 rounded-md"
           >
             Delete
           </button>

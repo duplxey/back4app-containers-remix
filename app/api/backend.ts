@@ -1,5 +1,16 @@
 import Parse from "parse/node";
-import NoteModel, {serializeNote} from "~/store/NoteModel";
+import NoteModel from "~/store/NoteModel";
+
+export const serializeNote = (note: Parse.Object<Parse.Attributes>): NoteModel => {
+  return {
+    objectId: note.id,
+    emoji: note.get("emoji"),
+    title: note.get("title"),
+    content: note.get("content"),
+    createdAt: new Date(note.get("createdAt")),
+    updatedAt: new Date(note.get("updatedAt")),
+  };
+}
 
 export const getNotes = async (): Promise<NoteModel[]> => {
   try {
