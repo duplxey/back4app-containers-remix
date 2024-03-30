@@ -40,7 +40,10 @@ To learn more check out the [article](#).
 
 3. Start a new container:
    ```sh
-    $ docker run -it -p 3000:3000 -d remix-notes:1.0
+    $ docker run -it -p 3000:3000
+        -e PARSE_APPLICATION_ID=<your_parse_app_id> 
+        -e PARSE_JAVASCRIPT_KEY=<your_parse_javascript_key> 
+        -d remix-notes:1.0
     ```
 
 4. Navigate to [http://localhost:3000/](http://localhost:3000/) in your favorite web browser.
