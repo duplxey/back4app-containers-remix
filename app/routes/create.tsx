@@ -43,7 +43,7 @@ export default function NoteCreate() {
             className="bg-blue-500 hover:bg-blue-600 font-semibold
               text-white p-2 border-2 border-blue-600 rounded-md"
           >
-            Save
+            Create
           </button>
         </div>
       </Form>
