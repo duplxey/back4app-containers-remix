@@ -1,42 +1,32 @@
-import type {MetaFunction} from "@remix-run/node";
+import {json} from "@remix-run/node";
+import {Link, NavLink, useLoaderData} from "@remix-run/react";
+import {getNotes} from "~/api/backend";
 
-export const meta: MetaFunction = () => {
-  return [
-    {title: "back4app-containers-remix"},
-    {name: "description", content: "Learn how to deploy a Remix project to Back4app Containers."},
-  ];
+export const loader = async () => {
+  const notes = await getNotes();
+  return json({notes});
 };
 
 export default function Index() {
+  const {notes} = useLoaderData<typeof loader>();
   return (
-    <div style={{fontFamily: "system-ui, sans-serif", lineHeight: "1.8"}}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
+    <>
+      <Link to={`/create`}>
+        <div className="bg-blue-500 hover:bg-blue-600 text-lg font-semibold text-white
+         px-4 py-3 mb-2 border-2 border-blue-600 rounded-md"
+        >
+          + Create
+        </div>
+      </Link>
+      {notes.map(note => (
+        <NavLink key={note.objectId} to={`/${note.objectId}`}>
+          <div className="hover:bg-slate-200 text-lg font-semibold
+            px-4 py-3 mb-2 border-2 border-slate-300 rounded-md"
           >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-            className="text-red-500 text-2xl"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
-    </div>
+            {note.emoji} {note.title}
+          </div>
+        </NavLink>
+      ))}
+    </>
   );
 }

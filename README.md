@@ -1,36 +1,46 @@
-# Welcome to Remix + Vite!
+# back4app-containers-remix
 
-📖 See the [Remix docs](https://remix.run/docs) and the [Remix Vite docs](https://remix.run/docs/en/main/future/vite) for details on supported features.
+This repository demonstrates how to dockerize and deploy a [Remix](https://remix.run/) application to [Back4app Containers](https://www.back4app.com/container-as-a-service-caas).
+
+To learn more check out the [article](#).
 
 ## Development
 
-Run the Vite dev server:
+1. Fork/Clone
 
-```shellscript
-npm run dev
-```
+2. Install the dependencies:
 
-## Deployment
+    ```sh
+    $ npm install
+    ```
+   
+3. Create a *.env* file in the project root with the following content:
 
-First, build your app for production:
+    ```sh
+    PARSE_APPLICATION_ID=<your_parse_app_id>
+    PARSE_JAVASCRIPT_KEY=<your_parse_javascript_key>
+   ```
 
-```sh
-npm run build
-```
+4. Run the server:
 
-Then run the app in production mode:
+    ```sh
+    $ npm run dev
+    ```
 
-```sh
-npm start
-```
+5. Navigate to [http://localhost:5173/](http://localhost:5173/) in your favorite web browser.
 
-Now you'll need to pick a host to deploy it to.
+## Deploy (Docker)
 
-### DIY
+1. Install Docker (if you don't have it yet).
 
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
+2. Build and tag the image:
+    ```sh
+    $ docker build -t remix-notes:1.0 .
+    ```
 
-Make sure to deploy the output of `npm run build`
+3. Start a new container:
+   ```sh
+    $ docker run -it -p 3000:3000 -d remix-notes:1.0
+    ```
 
-- `build/server`
-- `build/client`
+4. Navigate to [http://localhost:3000/](http://localhost:3000/) in your favorite web browser.
